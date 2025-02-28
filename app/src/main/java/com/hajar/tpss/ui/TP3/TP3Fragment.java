@@ -30,7 +30,6 @@ public class TP3Fragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_t_p3, container, false);
 
-        // Initialisation des vues
         Prenom = view.findViewById(R.id.Prenom);
         name = view.findViewById(R.id.name);
         Phone = view.findViewById(R.id.Phone);
@@ -38,10 +37,9 @@ public class TP3Fragment extends Fragment {
         btnAjouter = view.findViewById(R.id.button);
         btnAfficher = view.findViewById(R.id.button2);
 
-        // Bouton Ajouter
         btnAjouter.setOnClickListener(v -> Ajouter());
 
-        // Bouton Afficher
+
         btnAfficher.setOnClickListener(v -> Afficher());
 
         return view;
@@ -53,20 +51,17 @@ public class TP3Fragment extends Fragment {
         String PhoneValue = Phone.getText().toString().trim();
         String EmailValue = Email.getText().toString().trim();
 
-        // Vérification des champs vides
         if (PrenomValue.isEmpty() || nameValue.isEmpty() || PhoneValue.isEmpty() || EmailValue.isEmpty()) {
             Toast.makeText(requireContext(), "Tous les champs sont obligatoires", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Insertion dans la base de données
         SQLiteDatabase db = DataBaseHelper.getInstance(requireContext()).getWritableDatabase();
         db.execSQL("INSERT INTO contacts (Prenom, name, Phone, Email) VALUES (?, ?, ?, ?)",
                 new String[]{PrenomValue, nameValue, PhoneValue, EmailValue});
 
         Toast.makeText(requireContext(), "Contact ajouté", Toast.LENGTH_SHORT).show();
 
-        // Réinitialisation des champs
         Prenom.setText("");
         name.setText("");
         Phone.setText("");
